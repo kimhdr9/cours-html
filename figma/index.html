@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello Bulma!</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+  </head>
+  <body>
+    <nav class="navbar is-white" role="navigation" aria-label="main navigation">
+        <!-- pour le logo de figma -->
+        <div class="navbar-brand">
+          <a class="navbar-item" href="https://bulma.io">
+            <img src="./images/figma_logo.png" >
+          </a>
+        <!-- burger en cas de compression horizontale  -->
+          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+        <!-- Les éléments sont disposés à droite -->
+        <div class="navbar-end">
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a class="navbar-link is-size-5">Features</a>
+                <div class="navbar-dropdown">
+                    <a class="navbar-item is-size-5"> Design </a>
+                    <a class="navbar-item is-size-5"> Prototyping </a>
+                    <a class="navbar-item is-size-5"> Design Systems </a> 
+                    <a class="navbar-item is-size-5"> Collaboration </a>
+                    <a class="navbar-item is-size-5"> What's news </a>
+                    <a class="navbar-item is-size-5"> Downloads </a> 
+                </div>
+            </div>
+              <div class="navbar-item is-size-5 has-dropdown is-hoverable">
+                <a class="navbar-link">Entreprise</a>
+                <div class="navbar-dropdown">
+                    <a class="navbar-item is-size-5"> Overview </a>
+                    <a class="navbar-item is-size-5"> Customers </a>
+                    <a class="navbar-item is-size-5"> Contact Sales </a> 
+                </div>
+            </div>
+            <a class="navbar-item is-size-5">
+                Pricing
+            </a>  
+            <a class="navbar-item is-size-5">
+                Community
+            </a>
+            <div class="navbar-item is-size-5 has-dropdown is-hoverable">
+                <a class="navbar-link">Compagny</a>
+                <div class="navbar-dropdown">
+                    <a class="navbar-item is-size-5"> Blog </a>
+                    <a class="navbar-item is-size-5"> Careers </a>
+                    <a class="navbar-item is-size-5"> Our Story </a>
+                    <a class="navbar-item is-size-5"> Help Center </a>    
+                </div>
+            </div>
+            <a class="navbar-item is-size-5">
+                Log in
+            </a>
+            <a class="navbar-item is-size-5">
+                <button class="button is-black is-medium">Sign up</button>
+            </a>  
+          </div>
+      </nav>
+      <!-- 
+
+       le prix
+
+       -->
+        <div class="block" style="margin-top: 10rem;">
+            <section >
+                    <h1 class="title is-2 has-text-centered">Pricing</h1>
+            </section>
+        </div>
+        <!-- 
+
+         LES INFORMATIONS 
+            
+         -->
+        <div class="container is-centered is-fluid" style="margin-top: 4rem; padding-right: 16rem;  padding-left: 16rem;">
+            <div class="columns is-centered" style="size: 10rem;">
+                <div class="column is-1">
+                </div>
+                <div class="column  ">
+                    <div class="notification" style="size :1.5rem">
+                        <div class="title is-5 has-text-centered">Starter</div> 
+                        <div class="title is-4 has-text-centered" style="margin-top: 2rem;">Free</div>
+                        <div class="is-size-5 has-text-centered" style="margin-top: 1rem;">
+                            for up to 2 editors and 3 projects
+                        </div>
+                        <div class="container is-size-5" style="margin-top: 1rem; margin: 1rem;">
+                            <ul >
+                                <li>3 projects</li>
+                                <li>30-day version history</li>
+                                <li>Up to 2 editors</li>
+                                <li>Unlimited cloud storage</li>
+                                <li>Unlimited free viewers</li>
+                            </ul>
+                            <br><br><br><br>
+                        </div> 
+                        <a href="" class="button is-primary is-outlined is-fullwidth">Choose Starter</a>
+                        <br>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="notification" style="size :1.5rem">
+                        <div class="title is-5 has-text-centered">Prefessionnal</div> 
+                        <div class="title is-4 has-text-centered" style="margin-top: 2rem;">$12 per editor/month</div>
+                        <div class="is-size-5 has-text-centered" style="margin-top: 1rem;">
+                            Billed annually or $15 month-to-month
+                        </div>
+                        <div class="container is-size-5" style="margin-top: 1rem; margin: 1rem;">
+                            <ul >
+                                <li>Unlimited projects</li> 
+                                <li>Unlimited version history</li> 
+                                <li>Custom file/user permissions</li> 
+                                <li>Invite-only private projects</li>  
+                                <li>Shareable team libraries</li> 
+                            </ul>
+                            <br><br><br>
+                        </div> 
+                        <a href="" class="button is-primary is-fullwidth">Choose Professional</a>
+                        <p class=" has-text-info has-text-centered"> Free for students and educators </p>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="notification" style="size :1.5rem">
+                        <div class="title is-5 has-text-centered">Organization</div> 
+                        <div class="title is-4 has-text-centered" style="margin-top: 2rem;">$45 per editor/month</div>
+                        <div class="is-size-5 has-text-centered" style="margin-top: 1rem;">
+                            for up to 2 editors and 3 projects
+                        </div>
+                        <div class="container is-size-5" style="margin-top: 1rem; margin: 1rem;">
+                            <ul >
+                                <li>3 projects</li>
+                                <li>30-day version history</li>
+                                <li>Up to 2 editors</li>
+                                <li>Unlimited cloud storage</li>
+                                <li>Unlimited free viewers</li>
+                            </ul>
+                            <br><br><br><br>
+                        </div> 
+                        <a href="" class="button is-info is-fullwidth">Choose Organization</a>
+                        <p class=" has-text-info has-text-centered"> Contact sales (best for 9+ editors) </p>
+                    </div>
+                <div class="column is-1">
+                </div>
+            </div>
+        </div>
+  </body>
+</html>

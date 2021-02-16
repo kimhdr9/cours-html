@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaires 1/2</title>
+</head>
+<body>
+    <!-- méthode get par défaut les moteurs de recherche
+    la méthode post si les données sont nombreuses 
+    dans un nouveau onglet 
+    autocomplete qui complète 
+    enctype pdf 
+    name important 
+    -->
+    <form method="post" action="" name="MonFormulaire" target="_blank" autocomplete="on">
+        <fieldset >
+            <legend> Ma section </legend>
+             <p> Nom : <input type="text" name="user_name"></p>
+             <p> <textarea name="article_content" id="article_content" cols="30" rows="10" placeholder="Votre texte ici .."></textarea></p>
+             <p> choix système : <br>
+            <select name="choixOS" id="id_select" required>
+                <option value="linux">GNU/Linux</option>
+                <option value="windows">Windows</option>
+                <option value="mac">MacOS</option>
+            </select>
+            </p>
+             <p><input type="submit" name="valid_form" value="Envoyer"></p>
+    </fieldset>
+    </form>
+</body>
+</html>

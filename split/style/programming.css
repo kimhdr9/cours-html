@@ -1,0 +1,24 @@
+body {
+    background-image : url(../images/programming.jpg)
+}
+.boite{
+    margin-top : 150px;
+    align-content: center;
+}
+#titre{
+    color: white;
+    text-align: center;
+    font-family: 'Noto Serif', serif;
+    font-size: 60px;
+}
+#bouton{
+    margin-top: 10%;
+    margin-left: 45%;
+    background-color: transparent;
+    font-size: 18px;
+    font-style: oblique;
+    color: white;
+    border-color: white;
+    padding: 20px;
+    width: 200px;
+}

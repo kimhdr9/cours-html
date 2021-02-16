@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>item list buma vesion</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link rel="stylesheet" href="monstyle.css">
+</head>
+<body>
+    <header id="header-title">
+        <section class="hero is-primary is-bold">
+            <div class="hero-body">
+            <div class="container">
+                <h1 class="title is-1" id="titre">
+                Item List
+                </h1>  
+                <h1 class="subtitle is-4" id="subtitre">
+                    Add/ Delete a item 
+                </h1>
+                <h5 class="subtitle is-6">-- javascript tutoriel + Bulma CSS Framework -- </h5>            
+            </div>
+        </section>
+    </header>
+        <div class="container">
+            <form id="addForm" class="form-inline mb-3">
+                <input type="text" class="input" id="item" placeholder="Add an item Here">
+                <input type="submit" class="button is-black is-small" value="Submit">
+              </form>
+        </div>
+        <div class="block">
+      <h4>Delete  <code>Items</code></h4><hr>
+      <section class="block" id="listItem">
+        <ul id="items" class="panel list-group ">
+            <li class="panel-block list-group-item "><button class="button is-danger is-small delete">X</button>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum, neque. </li>
+            <li class="panel-block list-group-item"><button class="button is-danger is-small delete">X</button>Lorem ipsum dolor sit amet. </li>
+            <li class="panel-block list-group-item"><button class="button is-danger is-small delete">X</button>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam voluptatibus cum, veritatis rem vel dolore a accusamus! Doloremque molestiae exercitationem ducimus iusto fuga, et eius, accusantium voluptas, voluptatem voluptatibus adipisci. </li>
+            <li class="panel-block list-group-item"><button class="button is-danger is-small delete">X</button>Item 4 </li>
+          </ul>
+        </section>
+        </div>
+        <!-- le code javascript  -->
+    <script src="dom.js"></script>
+</body>
+</html>

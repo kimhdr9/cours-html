@@ -1,0 +1,397 @@
+Videos xavki
+
+Video 1
+
+Présentation de Docker
+
+C'est la virtualisation des applications, sous linux, mais aussi possible sous Windows ou mac à travers une machine virtuelle linux.
+
+
+Installation
+
+	Docker est déjà présent sur les machines virtuelles centos7 de la DSI.
+	Pour mettre à jour la version de Docker :
+	https://docs.docker.com/engine/install/centos/
+	attention il faut activer le dépôt de base :
+	cd /etc/yum.repos.d/
+	mv CentOS-Base.repo.OFF CentOS-Base.repo
+	
+
+pté-requis pour utiliser la commande docker :
+
+	Par défaut le service docker n'est pas lancé
+
+	+ sudo systemctl start docker
+
+	+ sudo systemctl status docker 
+
+	le service crée un fichier dans le répertoire var, pour lequel le compte userdev n'a pas les droits nécessaires.
+
+	+ sudo chmod 666 /var/run/docker.sock	
+	
++ les premières commandes 
+
+	Sur le site hub.docker.com, il existe un grand nombre d'applications : comme des serveurs web, apache, nginx, des bases
+	de données, postgresql, mongodb, mysql, des distributions linux, ubuntu, alpine, des langages python, javascript, des applications
+	nextcloud.. 
+
+	récupérer une application, par exemple la distribution linux alpine  dans le même principe que git :
+
+	docker pull alpine 
+
+	+ cela renvoi un message d'erreur, car il a besoin de connaitre la version à récupérer,
+
+	docker pull alpine:latest
+
+        + Dans le vocable de docker, nous venons de prendre une image de "alpine"
+
+	docker image ls 
+
+	+ On peut remarquer la synthaxe de docker s'inspire des commandes unix comme ls,  rm.
+
+	docker images
+
+	+ cette commande est identique à la précédente.
+	
+	noter l'image id tout comme git c'est une séquence hexedécimale assez longue, ce qui est affiché est une partie tronquée.
+
+	+ exécuter est une image,  en fait les images sont des programmes, ils peuvent avoir de multiples exécutions, pour cela on les embarque
+	dans des containeurs.
+
+	+ dock run alpine:latest
+
+	+ dock ps
+	pas de réponse, ps semblable à la commande unix
+
+	+ dock ps -a
+	affiche tous les conteneurs mêmes les inactifs, dans la liste de la colonne "STATUS", EXIT, cela signifie que le conteneur a quitté l'exécution.
+
+	+dock run -di --name monlinux alpine:test
+	en ajoutant les options -d -i  ici regoupés en -di  
+		-d pour --detach exécuter le  containeur en tache de fond
+		-i pour --interactive en mode interacif
+	
+	+docker exec -ti monlinux sh
+	cette fois-ci on va exécuter le conteneur "monlinux" en mode shell 'sh'
+		-t ou --tty pour accéder à un terminal sur alpine
+
+	+ sur le tty : 
+			
+			ps -a
+			exit
+	
+	+ dock rm id-conteneur
+	supprime le conteneur, ajouter -f pour forcer la suppression
+
+	
+	+ dock rm id-conteneur -f
+	
+	+ dock rmi id-image	
+	pour supprimer l'image.
+
+Video 2 Lancer conteneur nginx
+
+	on va lancer le serveur web nginx
+
+	+ docker run -tid -p 8080:80 --name web nginx:latest
+
+	si nous n'avons pas l'image sur notre machine, docker va télécharger l'image depuis le docker hub
+	l'option -p ou --port permet de rediriger le port de sortie de l'application vers un autre
+	ici 80 ( port web par défaut ) vers 8080.  la structure  (nouveau port):(port par défaut)
+
+	- lancer un navigateur en http;//localhost:8080
+
+	- docker inspect web
+
+	affiche des informations sur le conteneur "web"
+
+	en particulier son ip  dans la rubrique "Network" > "Bridge" dans mon cas j'ai 172.17.0.2
+
+	http://172.17.0.2	
+
+	ici  le port est le 80, sur l'hote c'est 8080 selon la commande docker initiale.
+
+
+Video 3 Monter un volume persistant
+
+	Pour démarrer un conteneur
+
+	+ docker start web
+
+	Pour arrêter le conteneur web
+
+	+ docker stop web	
+
+	Pour se connecter au conteneur web en mode shell
+
+	+ on exécute en mode -t ( tty ) -i ( interactif ) web ( nom du conteneur ) sh (shell)
+
+	docker exec -ti web sh	
+
+	les conteneurs ont le minimum, il faut donc ajouter les applications
+ 	l'application n'a pas d'éditeur : il faut l'installer, c'est basé sur débian.	
+	
+	apt-get update
+	apt-get install vim
+
+	je modifie la page d'acceuil d'nginx
+	vim /usr/share/nginx/html/index.html
+
+	si on arrête le conteneur puis on le relance
+
+	la modification reste, par contre si je le supprime, la modification a disparu
+
+	+ docker rm web -f
+
+	+ docker run -tid -p 8080:80 --name web nginx:latest
+
+	les conteneur ne stocke pas la partie data	
+	la solution est le volume : point de montage entre l'hote et le conteneur
+
+	on créé un répertoire et je donne les droits d'écriture
+
+	sudo mkdir -p /srv/data/nginx 
+	sudo cd /srv/data
+	sudo chmod 777 nginx
+
+	docker run -tid -p 8080:80 -v /usr/data/nginx/:/usr/share/nginx/html/  --name web nginx:latest
+
+	on a ajouté une nouvelle option -v ou --volume
+	cela associe un répertoire de l'hote à un répertoire du conteneur
+
+	meme en supprimant, l'information n'est pas perdue car elle est stockée sur l'hôte.
+
+Video 4 Docker Volumes ( avec la version installée de la DSI l'option --mount n'existe pas )
+
+	nouvelle commande dock volume
+	but associer un zone de montage définie par le voulme
+
+	pour avoir des informations sur la fonction
+
+	+ docker volume 
+	pour créer un volume par exemple monvolume
+	+ docker volume create monvolume
+
+	pour inspecter le volume "monvolume"
+
+	+ docker volume inspect monvolume
+
+	
+    {
+        "Driver": "local",
+        "Labels": {},
+        "Mountpoint": "/var/lib/docker/volumes/monvolume/_data",
+        "Name": "monvolume",
+        "Options": {},
+        "Scope": "local"
+    }
+]
+	Cette commande affiche le lien physique avec la structure de l'hôte, pour pouvoir le modifier, il est nécessaire 
+	de donner les droits d'écriture aux comptes utilisateurs.
+
+	+ docker run -di -p 8080:80 --name web -v monvolume:/usr/share/nginx/html  ae2feff98a0c
+
+	si je modifie index.hmtl
+	+ sudo vim /var/lib/docker/volumes/monvolume/_data/index.html
+	la modification est immédiaement visible sur le navigateur.
+	
+	avec la version 19 de Docker, l'option --mount est accessible et on peut effectuer la commande :
+
+	+ docker run -tid --name web1 -p 8080:80 --mount source=vol1,target=/usr/share/nginx/html nginx:latest
+
+Video 5 Variables d'environnement
+
+Vidéo 6 Créer une image avec un conteneur ( docker commit )
+
+	docker commit -m 'version 2' nom_conteneur nom_image:numero_version
+
+	syntaxe semblable à git.
+
+	il faut préférer l'utilisation du Dockerfile.
+
+Vidéo 7
+	Dockerfile : créer une image ( docker build )
+
+
+	+- fichier de configuration
+
+	+- objectif : création  d'une image
+
+	+- séquence d'instruction :
+		+- RUN : lancements de commandes ( apt ..)
+		+- ENV : variables d'environnement
+		+- EXPOSE : expositions de port
+		+- VOLUME : dfinition de volume
+		+- COPY : cp entre host et conteneur
+		+- ENTRYPOINT : processus mettre
+		.... 
+	Intérêts de dockerfile
+
+	+- relancer une création d'image à tout moment
+	
+	+- meilleur visibilité sur ce qui est fait
+
+	+- partge facile et possibilité de gitter
+
+	+- script d'édition docker file (varaibles ...)
+	
+	+- ne pas se poser de question lors du docker run du conteneur
+
+	+- cration images prod // dev - CI // CD
+
+	Exemple de dockfile :
+
+	FROM ubuntu:latest
+	MAINTAINER kim
+	RUN apt-get update \
+	&& apt-get install -y vim git \
+	&& apt-get clean \
+	&& rm -rf /var/lib/apt/list/* /tmp/* /var/tmp/*
+
+	pour construire l'image à partir du dockerfile 
+	syntaxe docker build -t nomImage:tag
+
+	docker build -t ubuntu:k1.0 .
+
+	ne pas oublier le . à la fin
+
+	si on veut le faire avec un autre ficher que "dockerfile" (option -f) 
+	ou rendre silencieux  (option -q pour --quiet )
+
+	docker build -t ubuntu:k1.1 -f mondockerfile -q .
+
+	affiche les séquences dans l'image
+        docker history ubuntu:k1.1
+
+Video 8 Comprendre les layers/couches
+
+	deux types de couches :
+		lecture seule
+		ecriture seule
+
+	chaque run ajoute une couche à l'image
+	pour diminuer le nombre de couches on peut regrouper les instructions
+	la limite est de 127
+	les couches de l'image ne peuvent pas être réduites.
+	des images peuvent se partager des couches et donc réduire la zone de stockage
+
+Vidéo 11 Networks
+
+		Bridge : ou docker0 libellé par défaut  gestion
+
+	réseau par défaut
+	
+		172.17.0.0/16
+
+	communication entre conteneur attention les IP ne sont pas fixes, plutot se baser sur le nom du contenneur
+
+	exemple :
+
+	je crée un conteneur1 à partir d'une image alpine:latest
+	
+	docker run -tid --name conteneur1 alpine:latest
+
+	puis j'execute le shell de ce conteneur1, pour afficher l'adresse ip
+
+	docker exec -ti conteneur1 sh
+
+	 #ip a
+	7: eth0@if8: <BROADCAST,MULTICAST,UP,LOWER_UP,M-DOWN> mtu 1500 qdisc noqueue state UP 
+	link/ether 02:42:ac:11:00:02 brd ff:ff:ff:ff:ff:ff
+    	inet 172.17.0.2/16 brd 172.17.255.255 scope global eth0
+       	valid_lft forever preferred_lft forever
+
+
+	dans mon cas l'adresse prise est 172.17.0.2  ( l'adresse 172.17.0.1 est prise par l'hôte)
+
+	on sort du shell du conteneur
+
+	> ip a ( sur l'hôte )
+	6: docker0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default 
+    	link/ether 02:42:8f:94:1d:e6 brd ff:ff:ff:ff:ff:ff
+    	inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+       	valid_lft forever preferred_lft forever
+    	inet6 fe80::42:8fff:fe94:1de6/64 scope link 
+       	valid_lft forever preferred_lft forever
+
+	l'adresse dans le réseau bridge docker0 est le 172.17.0.1
+
+
+	couvre beaucoup de besoin
+
+	Bridge personalisé 
+
+	Création 
+	docker network create -d bridge --subnet 172.30.0.0/16 monreseau
+
+	pour afficher les réseaux docker
+
+	docker network ls
+
+	Utilisation
+	docker run -tid --name conteneur1 --network monreseau alpine:latest
+
+	on peut directement afficher l'adresse ip du conteneur en faisant
+
+	docker exec -ti conteneur1 ip a
+
+	créons un conteneur3 avec le réseau par défaut
+
+	docker run -tid --name conteneur3 alpine:latest
+
+	docker exec -ti conteneur3 ip a
+	docker exec -ti conteneur3 ping 172.30.0.2
+
+	pas réponse, les deux conteneurs sont sur 2 réseaux 
+
+	option--link ajoute l'adresse ip du conteneur lié au fichier /etc/hosts
+
+	par exemple
+	docker run -tid --name conteneur1 alpine:latest
+	docker run -tid --name conteneur2 --link conteneur1 alpine:latest
+	docker exec -ti conteneur2 cat /etc/hosts ( fichier de résolution entre machine)
+
+	127.0.0.1	localhost
+	::1	localhost ip6-localhost ip6-loopback
+	fe00::0	ip6-localnet
+	ff00::0	ip6-mcastprefix
+	ff02::1	ip6-allnodes
+	ff02::2	ip6-allrouters
+	172.17.0.2	conteneur1 56f0898b5e81
+	172.17.0.3	183ca943dea9
+	
+	Et en plus
+
+	+- --add-host <nomhost>:ip complète le /etc/hosts
+
+	+- --dns : ajoute les ip de serveur dns
+
+Video 13 Pratiques de sécurité
+
+	
+	
+
+Vidéo 14 images : Tags, Pull et push
+
+	Tags : versionning de l'image
+
+	docker tag <image_source>:<version> <image_dest>:<version>
+	
+	il est intéressant de créer une version latest car c'est la version par défaut
+	par exemple 
+	docker tag ubuntu:k1.0 kbuntu:latest
+	et aussi de changer le nom de l'image car si celle-ci est une version générique de docker hub
+
+Vidéo 15 : sauvegarder /charger une image en fichier tar
+
+	le but est de créer un fichier tar à partir d'une image
+
+	docker save -o fichier.tar image:version
+
+	-o pour --output nom du fichier de sortie
+
+	pour charger un fichier tar en image
+
+	docker load -i fichier.tar
+	
+	-i pour --input nom du fichier tar

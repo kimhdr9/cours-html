@@ -1,0 +1,16 @@
+<h1>hello</h1>
+<br>
+pour ouvrir une page avec google chrome ctrl O
+éditeur de code : visual studio code .
+
+avec visual code ! pour faire apparaitre la structure de html
+
+ou html
+DOCTYPE
+
+lang=fr
+CTRL S = pour sauvegarder
+pour commenter : CTRL / se positionner sur la ligne
+
+section : grosse partie
+div : plus petite partie

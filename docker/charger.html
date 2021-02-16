@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- cdn pour accéder au framework css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <title>Premières commandes</title>
+    <!-- JQuery pour partager les pages de navigations  -->
+    <script
+  src="http://code.jquery.com/jquery-3.5.1.min.js"
+  integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+  crossorigin="anonymous"></script>
+  <script>
+    $(function(){
+      $('#header').load('navbar.html');
+    });
+  </script>
+</head>
+<body>
+    <div id="header"></div>
+    <!-- Présentation -->
+    <div class="container">
+    <div class="notification is-info">
+          
+        <h2 class="title is-3">Les premières commandes Docker </h2>
+
+        <p>Sur le site hub.docker.com, il existe un grand nombre d'applications : comme des serveurs web, apache, nginx, des bases
+            de données, postgresql, mongodb, mysql, des distributions linux, ubuntu, alpine, des langages python, javascript, des applications
+            nextcloud.. </p>
+        
+      </div>
+      <!-- charger une image -->
+      <div class="notification is-light">
+          <h3 class="title is-3"> Charger une image </h3>
+        Récupérer une application, par exemple la distribution linux alpine  dans le même principe que git : <br>
+    
+        <code> docker pull alpine     </code>  <br>
+    
+         Cela renvoi un message d'erreur, car il a besoin de connaitre la version à récupérer, <br>
+    
+        <code>docker pull alpine:latest</code> <br>
+
+        Dans le vocable de docker, nous venons de prendre une image de "alpine". 
+        </div>
+        <!-- manipuler une image -->
+      <div class="notification is-light">
+        <h3 class="title is-3"> Les commandes sur les images </h3>
+  
+      Pour afficher les images chargées : <br>  
+      <code> docker images ls     </code>  <br>
+  
+      On peut remarquer la synthaxe de docker s'inspire des commandes unix comme ls,  rm. On peut tou simplement taper la commande suivante : <br>
+  
+      <code>docker images</code> <br>
+
+      Noter l'image id tout comme git c'est une séquence hexedécimale assez longue, ce qui est affiché est une partie tronquée.
+      </div>
+      <nav class="pagination">
+        <a class="button bd-fat-button is-primary is-light pagination-previous" href="./index.html" title="home"><strong>Home</strong></a>
+        <a class="button bd-fat-button is-primary is-light pagination-next" href="./executer.html" title="Executer">  <strong>Executer une image </strong> => </a>
+      </nav>
+    </div>
+    
+</body>
+</html>
